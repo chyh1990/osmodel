@@ -1,9 +1,10 @@
 CILLY=cilly
 OBJS=fs.o
+HEADERS=
 
 all: $(OBJS)
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CILLY) -c --save-temps $^
 
 clean:
