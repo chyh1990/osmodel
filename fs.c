@@ -64,6 +64,9 @@ struct proc{
 
 struct inode{
 	int nlink;
+	int size;
+#define MAX_DATA_LENGTH
+	char data[MAX_DATA_LENGTH];
 };
 DEFINE_ASSOC_LIST(i2proc, int, struct proc)
 DEFINE_ASSOC_LIST(i2inode, int, struct inode)
