@@ -1,11 +1,15 @@
 CILLY=cilly
+KLEEPATH=/home/user/prog/s2e/klee-cde-package
+LLVMGCC=$(KLEEPATH)/bin/llvm-gcc.cde
+CFLAGS=-I$(KLEEPATH)/cde-root/home/pgbovine/klee/include/ --emit-llvm -c -g
 OBJS=fs.o
 HEADERS=
 
 all: $(OBJS)
 
 %.o: %.c $(HEADERS)
-	$(CILLY) -c --save-temps $^
+	$(LLVMGCC) $(CFLAGS) $^
 
 clean:
 	rm -f *.o *.i *.cil.c
+	rm -rf klee-out-*

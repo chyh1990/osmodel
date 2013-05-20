@@ -16,15 +16,21 @@
  * =====================================================================================
  */
 
+#include <klee/klee.h>
+#include <fcntl.h>
 static inline void __OS_VERIFY_assume(int expression) { 
 	if (!expression) { ASSUME_LOOP: goto ASSUME_LOOP; } 
 	return; 
 }
 
+#if 0
 static inline void __OS_VERIFY_assert(int expr){
 	if(!expr) { ERROR: goto ERROR; }
 	return;
 }
+#endif
+
+#define __OS_VERIFY_assert(x) klee_assert(x)
 
 #define DEFINE_OS_NONDET(X) \
 	X __OS_VERIFIER_nondet_##X() { X val; return val; }
@@ -77,6 +83,8 @@ struct os_system{
 	//int time;
 	ProcMap procs;
 	InodeMap inodes;
+
+	//fs
 };
 
 static inline void init_proc(struct proc *p){
@@ -86,19 +94,24 @@ static inline void init_proc(struct proc *p){
 
 static struct os_system sys;
 
+int sys_open(const char *fn, int oflag)
+{
+	if(oflag & O_CREAT){
+	}
+}
+
 static void init_os(){
 	INIT_LIST(sys.procs);
 	INIT_LIST(sys.inodes);
 	struct proc idle;
-	//init_proc(&idle);
-	ADD_IN_ASSOC(sys.procs, 0, idle);
+	init_proc(&idle);
 	ADD_IN_ASSOC(sys.procs, 0, idle);
 	__OS_VERIFY_assert(sys.procs.len == 1);
-
 }
 
 int main()
 {
+	klee_make_symbolic(&sys, sizeof(struct os_system), "sys");
 	init_os();
 	return 0;
 }
