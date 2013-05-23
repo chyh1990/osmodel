@@ -149,6 +149,7 @@ int main()
 	klee_make_symbolic(&oflags, sizeof(oflags), "oflags1");
 	init_os();
 	__OS_VERIFY_assume(fn < MAX_LENGTH);
+	__OS_VERIFY_assume(fn1 < MAX_LENGTH);
 	int ret = sys_open(fn, oflags, 0);
 	int ret1 = sys_open(fn1, oflags1, 0);
 
