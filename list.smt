@@ -1,0 +1,23 @@
+(declare-const a Int)
+(declare-const b Int)
+(declare-const c Int)
+(declare-const d Int)
+(declare-const e Int)
+
+(assert (>= a 0))
+(assert (>= b 0))
+(assert (>= c 0))
+(assert (>= d 0))
+(assert (>= e 0))
+
+(assert (or (= a b) (= a c)))
+(assert (or (not (= a c)) (= a b)))
+(assert (or (not (= a d)) (or (= a b) (= d e))))
+(assert (or (not (= a c)) (or (= a c) false)))
+(assert (or (not (= a d)) (or (= a c) (= d e))))
+(assert (or (not (= c d)) (or false (= d e))))
+(assert (< c e))
+;(assert (not (= a b)))
+(check-sat)
+(get-model)
+

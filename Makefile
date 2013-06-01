@@ -1,10 +1,10 @@
 CILLY=cilly
-#KLEEPATH=/home/user/prog/s2e/klee-cde-package
-KLEEPATH=/home/chenyh/os/klee-cde-package
+KLEEPATH=/home/user/prog/s2e/klee-cde-package
+#KLEEPATH=/home/chenyh/os/klee-cde-package
 LLVMGCC=llvm-gcc.cde
 KLEE=klee.cde
-CFLAGS=-I../../include/ --emit-llvm -c -g
-OBJS=fs.o counter.o
+CFLAGS=-I$(KLEEPATH)/cde-root/home/pgbovine/klee/include/ --emit-llvm -c -g
+OBJS=fs.o counter.o testout/test_sys_mmap___sys_munmap.o
 HEADERS=
 
 all: $(OBJS)
